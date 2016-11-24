@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+
+    <input id="url" type="text" placeholder="URL" name="url">
+    <input id="submit" type="submit">
+
+    <div id="shortcode"></div>
+
+<script>
+    $(function () {
+       $('#submit').click(function () {
+           var url = $('#url').val();
+           $.post('/api/v1/shorten', {
+               url: url
+           }, function (data) {
+               $('#shortcode').html("Shortcode : " +
+                               '<a href="/' + data + '">' +
+                       window.location.href + data
+                       + '</a>'
+               );
+           })
+       })
+    })
+</script>
+</body>
+</html>

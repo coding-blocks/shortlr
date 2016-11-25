@@ -3,19 +3,32 @@
  */
 
 const hasha = require('hasha');
-
-const codeMap = {};
+const db = require('./db');
+const r = require('convert-radix64');
 
 module.exports = {
-    shorten: function (url) {
+    shorten: function (url, done) {
         let hash = hasha(url, {encoding: "base64", algorithm: "md5"});
         let code = hash.slice(0,4);
         code = code.replace('/', '-');
         code = code.replace('+', '_');
-        codeMap[code] = url;
-        return code;
+
+        db.addUrl(r.from64(code), url, function () {
+            done(code);
+        }, function (error) {
+            console.log(error);
+            done(null)
+        });
+
     },
-    expand: function(shortcode) {
-        return codeMap[shortcode];
+    expand: function(shortcode, done) {
+        console.log("Code" + shortcode);
+        console.log("Id" + r.from64(shortcode));
+        db.fetchUrl(r.from64(shortcode), function (url) {
+            done(url);
+        }, function (error) {
+            console.log(error);
+            done(null)
+        });
     }
 };

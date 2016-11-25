@@ -10,8 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "convert-radix64": "^0.2.0",
     "express": "^4.14.0",
     "hasha": "^2.2.0",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "mysql": "^2.12.0",
+    "sequelize": "^3.27.0"
   }
 }

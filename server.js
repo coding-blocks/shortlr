@@ -14,15 +14,21 @@ app.use('/', express.static(__dirname + "/public_html"));
 
 app.get('/:shortcode', (req, res) => {
 
-    let URL = shortner.expand(req.params.shortcode);
-    res.redirect(URL);
+    shortner.expand(req.params.shortcode, function (URL) {
+        if (!URL) {
+            res.send("Shit wtf!")
+        } else {
+            res.redirect(URL);
+        }
+    });
 
 });
 
 app.post('/api/v1/shorten', function (req, res) {
     let url = req.body.url;
-    let shortcode = shortner.shorten(url);
-    res.send(shortcode);
+    shortner.shorten(url, function (shortcode) {
+        res.send(shortcode);
+    });
 });
 
 app.get('/api/v1/expand/:shortcode', function (req, res) {

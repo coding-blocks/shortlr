@@ -14,7 +14,7 @@ app.use('/', express.static(__dirname + "/public_html"));
 
 app.get('/:shortcode', (req, res) => {
 
-    shortner.expand(req.params.shortcode, function (URL) {
+    shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
         if (!URL) {
             res.send("Shit wtf!")
         } else {

@@ -24,8 +24,23 @@ var URL = sequelize.define('url', {
     },
     longURL : {
         type: Sequelize.STRING
+    },
+    hits: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
     }
 });
+
+var Event = sequelize.define('event', {
+    time: {
+        type: Sequelize.DATE
+    },
+    from: {
+       type: Sequelize.STRING
+    }
+});
+
+Event.belongsTo(URL);
 
 module.exports = {
     addUrl: function (code, longURL, done, failed) {
@@ -39,9 +54,14 @@ module.exports = {
             failed(error);
         })
     },
-    fetchUrl: function(code, done, failed) {
+    fetchUrl: function(code, from, done, failed) {
         URL.findById(code).then(function (url) {
             done(url.longURL);
+            Event.create({
+                from: from,
+                time: new Date(),
+                urlCode: url.code
+            }).then(function () {url.increment('hits')});
         }).catch(function(error) {
             failed(error)
         })

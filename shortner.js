@@ -21,10 +21,10 @@ module.exports = {
         });
 
     },
-    expand: function(shortcode, done) {
+    expand: function(shortcode, from, done) {
         console.log("Code" + shortcode);
         console.log("Id" + r.from64(shortcode));
-        db.fetchUrl(r.from64(shortcode), function (url) {
+        db.fetchUrl(r.from64(shortcode), from, function (url) {
             done(url);
         }, function (error) {
             console.log(error);

@@ -2,19 +2,17 @@
  * Created by championswimmer on 24/11/16.
  */
 
-const hasha = require('hasha');
 const db = require('./db');
 const r = require('convert-radix64');
 
+
 module.exports = {
     shorten: function (url, done) {
-        let hash = hasha(url, {encoding: "base64", algorithm: "md5"});
-        let code = hash.slice(0,4);
-        code = code.replace('/', '-');
-        code = code.replace('+', '_');
 
-        db.addUrl(r.from64(code), url, function () {
-            done(code);
+        let code = (((Math.random() *100) << 0) * 1000000) + (((new Date().getTime() / 100) << 0) % 1000000);
+
+        db.addUrl(code, url, function (shortcode) {
+            done(r.to64(shortcode));
         }, function (error) {
             console.log(error);
             done(null)
@@ -22,8 +20,6 @@ module.exports = {
 
     },
     expand: function(shortcode, from, done) {
-        console.log("Code" + shortcode);
-        console.log("Id" + r.from64(shortcode));
         db.fetchUrl(r.from64(shortcode), from, function (url) {
             done(url);
         }, function (error) {

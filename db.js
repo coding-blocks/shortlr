@@ -48,7 +48,7 @@ module.exports = {
             code: code,
             longURL: longURL
         }).then(function(url) {
-            done();
+            done(url.code);
         }).catch(function(error) {
             console.log(error);
             failed(error);

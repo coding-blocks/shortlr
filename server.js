@@ -10,13 +10,22 @@ const shortner = require('./shortner');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/', express.static(__dirname + "/public_html"));
+const redirectToHome = function (req, res) {
+    res.redirect('http://codingblocks.com')
+};
 
-app.get('/:shortcode', (req, res) => {
+
+app.use('/admin', express.static(__dirname + "/public_html"));
+
+app.get('/:shortcode', (req, res, next) => {
+
+    if (!req.params.shortcode || req.params.shortcode.length == 0) {
+        res.redirect("http://codingblocks.com")
+    }
 
     shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
         if (!URL) {
-            res.send("Shit wtf!")
+            next();
         } else {
             res.redirect(URL);
         }
@@ -32,10 +41,31 @@ app.post('/api/v1/shorten', function (req, res) {
 });
 
 app.get('/api/v1/expand/:shortcode', function (req, res) {
-    // expand shortcode,
-    // generate original URL
-    // send the URL back
+    if (!req.params.shortcode || req.params.shortcode.length == 0) {
+        res.send({
+            status: 501,
+            message: "Wrong shortcode, or no shortcode given"
+        })
+    } else {
+        shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
+            if (!URL) {
+                res.send({
+                    status: 200,
+                    url: URL
+                })
+            } else {
+                res.send({
+                    status: 501,
+                    message: "Server error"
+                })
+            }
+        });
+    }
+
 });
+
+app.use(redirectToHome);
+
 
 app.listen(4000, () => {
     console.log("Listening on http://localhost:4000/");

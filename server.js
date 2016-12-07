@@ -40,7 +40,12 @@ app.post('/api/v1/shorten', function (req, res) {
     let secret = req.body.secret;
     let code = null;
     if (secret == SHORTENER_SECRET) {
+        console.log('Using secret');
         code = req.body.code;
+        if (code && code.length > 9) {
+            console.log('Too long code');
+            return res.send("We do not support larger than 9 character")
+        }
     }
 
     shortner.shorten(url, code, function (shortcode) {

@@ -8,20 +8,24 @@
 <body>
 
     <input id="url" type="text" placeholder="URL" name="url">
-    <input id="submit" type="submit">
+    <input id="secret" type="password" placeholder="secret" name="secret">
+    <input id="code" type="text" placeholder="code" name="code">
+
+    <button id="submit" type="submit">Create URL</button>
 
     <div id="shortcode"></div>
 
 <script>
     $(function () {
        $('#submit').click(function () {
-           var url = $('#url').val();
            $.post('/api/v1/shorten', {
-               url: url
+               url: $('#url').val(),
+               secret: $('#secret').val(),
+               code: $('#code').val()
            }, function (data) {
                $('#shortcode').html("Shortcode : " +
                                '<a href="/' + data + '">' +
-                       window.location.href + data
+                       window.location.origin + '/' + data
                        + '</a>'
                );
            })

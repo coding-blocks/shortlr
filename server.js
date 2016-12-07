@@ -7,6 +7,8 @@ const app = express();
 
 const shortner = require('./shortner');
 
+const SHORTENER_SECRET = "cb@123";
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -35,7 +37,13 @@ app.get('/:shortcode', (req, res, next) => {
 
 app.post('/api/v1/shorten', function (req, res) {
     let url = req.body.url;
-    shortner.shorten(url, function (shortcode) {
+    let secret = req.body.secret;
+    let code = null;
+    if (secret == SHORTENER_SECRET) {
+        code = req.body.code;
+    }
+
+    shortner.shorten(url, code, function (shortcode) {
         res.send(shortcode);
     });
 });

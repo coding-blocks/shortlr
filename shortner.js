@@ -7,9 +7,16 @@ const r = require('convert-radix64');
 
 
 module.exports = {
-    shorten: function (url, done) {
+    shorten: function (url, shortcode, done) {
 
-        let code = (((Math.random() *100) << 0) * 1000000) + (((new Date().getTime() / 100) << 0) % 1000000);
+        if (!shortcode) {
+            shortcode = (((Math.random() *100) << 0) * 1000000)
+                +
+                //current milliseconds (cutting off last 2 digits)
+                (((new Date().getTime() / 100) << 0) % 1000000);
+        }
+
+
 
         db.addUrl(code, url, function (shortcode) {
             done(r.to64(shortcode));

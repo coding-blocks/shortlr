@@ -11,7 +11,7 @@ const DB_NAME = process.env.SHORTURL_MYSQL_DBNAME || "shorturl";
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     host: DB_HOST,
-    dialect: 'mysql',
+    dialect: 'postgres',
 
     pool: {
         max: 5,
@@ -32,6 +32,11 @@ const URL = sequelize.define('url', {
 const Event = sequelize.define('event', {
     time    : { type: Sequelize.DATE },
     from    : { type: Sequelize.STRING }
+});
+
+const User = sequelize.define('user', {
+    username:   {type: Sequelize.STRING },
+    password:   {type: Sequelize.STRING }
 });
 
 Event.belongsTo(URL);

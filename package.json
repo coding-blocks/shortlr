@@ -2,7 +2,7 @@
   "name": "shorturl",
   "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "shortner.js",
   "scripts": {
     "start": "node server.js"
   },

@@ -8,11 +8,17 @@
     <script src="js/jquery.min.js"></script>
 </head>
 <body>
+
+
 <div class="col-lg-4 col-lg-offset-4">
+    <div class="center-block">
+        <h1 align="center" >Coding Blocks</h1>
+        <h2 align="center" >URL Shortener</h2>
+    </div>
     <div class="form-group row" style="margin-top: 20%">
         <input class="form-control" id="url" type="text" placeholder="URL" name="url">
-        <input class="form-control" id="secret" type="password" placeholder="secret" name="secret">
-        <input class="form-control" id="code" type="text" placeholder="code" name="code">
+        <input class="form-control" id="code" type="text" placeholder="custom shortcode (optional)" name="code">
+        <input class="form-control" id="secret" type="password" placeholder="secret (needed to make custom)" name="secret">
 
         <button class="btn center-block" id="submit" type="submit">Create URL</button>
     </div>
@@ -26,16 +32,20 @@
                 secret: $('#secret').val(),
                 code: $('#code').val()
             }, function (data) {
-                console.log(data);
-                $('#shortcode').html("Shortcode : " +
-                    (data.existed? "Already existed : ": "") +
-                    '<a href="/' + data + '">' +
-                    window.location.origin + '/' + data.shortcode +
-                    (data.existed ?
+
+                if (typeof data == 'string') {
+                    $('#shortcode').html(data)
+                } else {
+                    $('#shortcode').html("Shortcode : " +
+                        (data.existed? "Already existed : ": "") +
+                        '<a href="/' + data + '">' +
+                        window.location.origin + '/' + data.shortcode +
+                        (data.existed ?
                         '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
-                        : "")
-                    + '</a>'
-                );
+                            : "")
+                        + '</a>'
+                    );
+                }
             })
         })
     })

@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-const shortner = require('./shortner');
+const shortner = require('./utils/shortner');
 
 const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
 

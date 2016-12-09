@@ -4,12 +4,14 @@
 const Sequelize = require('sequelize');
 const r = require('convert-radix64');
 
+//This is so that BIGINT is treated at integer in JS
 require('pg').defaults.parseInt8 = true;
+//We have made sure that we do not use integers larger than 2^53 in our logic
 
 const DB_HOST = process.env.NODE_MYSQL_HOST || "localhost";
-const DB_USER = process.env.SHORTURL_MYSQL_USER || "shorturl";
-const DB_PASS = process.env.SHORTURL_MYSQL_PASS || "shorturl";
-const DB_NAME = process.env.SHORTURL_MYSQL_DBNAME || "shorturl";
+const DB_USER = process.env.SHORTURL_SQL_USER || "shorturl";
+const DB_PASS = process.env.SHORTURL_SQL_PASSWORD || "shorturl";
+const DB_NAME = process.env.SHORTURL_SQL_DBNAME || "shorturl";
 
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
@@ -47,8 +49,8 @@ const User = sequelize.define('user', {
 
 Event.belongsTo(URL);
 
-//sequelize.sync();
-sequelize.sync({force: true});
+sequelize.sync(); //Normal case
+//sequelize.sync({force: true}); //If schema changes NOTE: It will drop/delete old data
 
 
 module.exports = {
@@ -71,7 +73,7 @@ module.exports = {
                 failed(error);
             })
         } else {
-            //handle longer than 9 with alias map
+            //TODO: handle longer than 9 with alias map
         }
     },
     fetchUrl: function(code, from, done, failed) {

@@ -7,7 +7,7 @@ const app = express();
 
 const shortner = require('./shortner');
 
-const SHORTENER_SECRET = "cb@123";
+const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,7 +22,7 @@ app.use('/admin', express.static(__dirname + "/public_html"));
 app.get('/:shortcode', (req, res, next) => {
 
     if (!req.params.shortcode || req.params.shortcode.length == 0) {
-        res.redirect("http://codingblocks.com")
+        next();
     }
 
     shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
@@ -48,8 +48,10 @@ app.post('/api/v1/shorten', function (req, res) {
         }
     }
 
-    shortner.shorten(url, code, function (shortcode) {
-        res.send(shortcode);
+    shortner.shorten(url, code, function (shortcode, existed, longURL) {
+        res.send({
+            shortcode, existed, longURL
+        });
     });
 });
 

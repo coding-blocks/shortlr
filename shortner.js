@@ -35,8 +35,8 @@ module.exports = {
             }
         }
 
-        db.addUrl(code, url, alias, function (shortcode) {
-            done(r.to64(shortcode));
+        db.addUrl(code, url, alias, function (shortcode, existed, longURL) {
+            done(shortcode, existed, longURL);
         }, function (error) {
             console.log(error);
             done(null)

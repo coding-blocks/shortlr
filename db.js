@@ -2,6 +2,7 @@
  * Created by championswimmer on 25/11/16.
  */
 const Sequelize = require('sequelize');
+const r = require('convert-radix64');
 
 require('pg').defaults.parseInt8 = true;
 
@@ -25,6 +26,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 
 const URL = sequelize.define('url', {
     code    : { type: Sequelize.BIGINT, primaryKey: true },
+    codeStr : {type: Sequelize.STRING, unique: true},
     longURL : { type: Sequelize.STRING },
     hits    : { type: Sequelize.INTEGER, defaultValue: 0 }
 });
@@ -45,18 +47,25 @@ const User = sequelize.define('user', {
 
 Event.belongsTo(URL);
 
-sequelize.sync();
-//sequelize.sync({force: true});
+//sequelize.sync();
+sequelize.sync({force: true});
 
 
 module.exports = {
     addUrl: function (code, longURL, alias, done, failed) {
         if (!alias) {
-            URL.create({
-                code: code,
-                longURL: longURL
-            }).then(function (url) {
-                done(url.code);
+            URL.findOrCreate({
+                where: {
+                    code: code
+                },
+                defaults: {
+                    code: code,
+                    codeStr: r.to64(code),
+                    longURL: longURL
+                }
+
+            }).spread(function (url, created) {
+                done(url.codeStr, !created, url.longURL);
             }).catch(function (error) {
                 console.log(error);
                 failed(error);

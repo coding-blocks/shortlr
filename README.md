@@ -9,3 +9,8 @@ npm start
 ```
 
 And see it working on port 4000. 
+
+
+### Demo
+
+![Shortlr demo](docs/shortlr.gif)

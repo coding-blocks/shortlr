@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL-2.0",
   "dependencies": {
     "body-parser": "^1.15.2",
     "convert-radix64": "^0.2.0",

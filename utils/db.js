@@ -90,7 +90,8 @@ module.exports = {
     },
     urlStats: function (done, failed) {
         URL.findAll({
-            order: [['hits', 'DESC']]
+            order: [['hits', 'DESC']],
+            limit: 50
         }).then(function (urls) {
             done(urls);
         }).catch(function (error) {

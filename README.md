@@ -1,0 +1,11 @@
+# shortlr
+
+An URL shortening server written in **_express_**
+
+This is a complete web server with front end. You can simply start with  
+
+```
+npm start
+```
+
+And see it working on port 4000. 

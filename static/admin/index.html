@@ -38,7 +38,7 @@
                 } else {
                     $('#shortcode').html("Shortcode : " +
                         (data.existed? "Already existed : ": "") +
-                        '<a href="/' + data.shortcode + '">' +
+                        '<a href=' + data.shortcode + '"/">' +
                         window.location.origin + '/' + data.shortcode +
                         (data.existed ?
                         '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL

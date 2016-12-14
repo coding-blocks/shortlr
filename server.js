@@ -21,7 +21,7 @@ const redirectToHome = function (req, res) {
 };
 
 app.use('/api/v1', route.api_v1);
-app.use('/admin', express.static(__dirname + "/public_html"));
+app.use('/admin', express.static(__dirname + "/static/admin"));
 app.use('/', route.shortcode);
 app.use(redirectToHome);
 

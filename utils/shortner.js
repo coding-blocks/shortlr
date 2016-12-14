@@ -50,5 +50,13 @@ module.exports = {
             console.log(error);
             done(null)
         });
+    },
+    stats: function (done, failed) {
+        db.urlStats(function (urls) {
+            done(urls)
+        }, function (err) {
+            console.log(err);
+            done(null)
+        })
     }
 };

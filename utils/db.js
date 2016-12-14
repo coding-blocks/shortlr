@@ -87,5 +87,14 @@ module.exports = {
         }).catch(function(error) {
             failed(error)
         })
+    },
+    urlStats: function (done, failed) {
+        URL.findAll({
+            order: [['hits', 'DESC']]
+        }).then(function (urls) {
+            done(urls);
+        }).catch(function (error) {
+            failed(error)
+        })
     }
 };

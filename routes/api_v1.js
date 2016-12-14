@@ -52,6 +52,17 @@ route.get('/expand/:shortcode', function (req, res) {
 
 });
 
+route.get('/stats', function (req, res) {
+    shortner.stats(function (urls) {
+        res.send(urls)
+    }, function (error) {
+        res.send ({
+            code: 501,
+            message: "Error occured"
+        })
+    });
+});
+
 route.use((req, res) => {
     res.send("This is not the way to use the api")
 });

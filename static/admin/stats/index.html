@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="col-lg-6 col-lg-offset-3">
+    <div class="center-block">
+        <button id="refresh" class="btn center-block">Refresh</button>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th> Short URL </th>
+                <th> Target </th>
+                <th> Hits </th>
+            </tr>
+            </thead>
+            <tbody id="statstable">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+    function refreshStats () {
+        $.get('/api/v1/stats', function (data) {
+
+            stats = "";
+            data.forEach(function (url) {
+                stats +=
+                    "<tr>" +
+                    "<td>" + url.codeStr +"</td>" +
+                    "<td>" + url.longURL +"</td>" +
+                    "<td>" + url.hits +"</td>" +
+                    "</tr>"
+
+            });
+            $('#statstable').html(stats)
+        })
+    }
+    $(function () {
+        refreshStats();
+        $('#refresh').click(function () {
+            refreshStats();
+        })
+    })
+</script>
+</html>

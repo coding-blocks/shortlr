@@ -69,5 +69,4 @@ route.get('/stats', function (req, res) {
 route.use((req, res) => {
     res.send("This is not the way to use the api")
 });
-
 module.exports = route;

@@ -10,7 +10,7 @@ const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
 
 route.post('/shorten', function (req, res) {
     let url = req.body.url;
-    var http = /^http?(s):\/\//i;
+    var http = /^https?:\/\//i;
     if(http.test(url) == false)
         url = "http://"+url;
     let secret = req.body.secret;

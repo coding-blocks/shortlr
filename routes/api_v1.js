@@ -39,7 +39,7 @@ route.get('/expand/:shortcode', function (req, res) {
         })
     } else {
         shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
-            if (!URL) {
+            if (URL) {
                 res.send({
                     status: 200,
                     url: URL

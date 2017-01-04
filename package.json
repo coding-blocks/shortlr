@@ -3,6 +3,7 @@
   "version": "0.0.5",
   "description": "",
   "main": "shortner.js",
+  "repository": "http://github.com/coding-blocks/shorturl",
   "scripts": {
     "start": "node server.js"
   },

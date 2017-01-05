@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const shortner = require('./utils/shortner');
-const expressGa = require('./utils/express-ga-middleware');
+const expressGa = require('express-ga-middleware');
 
 const route = {
     api_v1: require('./routes/api_v1'),

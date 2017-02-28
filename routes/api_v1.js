@@ -32,6 +32,10 @@ route.post('/shorten', function (req, res) {
 });
 
 route.get('/expand/:shortcode', function (req, res) {
+    if(req.params.shortcode.length > 9) {
+        res.redirect(200, 'http://www.codingblocks.com');
+    }
+
     if (!req.params.shortcode || req.params.shortcode.length == 0) {
         res.send({
             status: 501,

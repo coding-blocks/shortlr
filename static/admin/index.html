@@ -27,26 +27,32 @@
 <script>
     $(function () {
         $('#submit').click(function () {
-            $.post('/api/v1/shorten', {
-                url: $('#url').val(),
-                secret: $('#secret').val(),
-                code: $('#code').val()
-            }, function (data) {
-
-                if (typeof data == 'string') {
-                    $('#shortcode').html(data)
-                } else {
-                    $('#shortcode').html("Shortcode : " +
-                        (data.existed? "Already existed : ": "") +
-                        '<a href=' + '"/' + data.shortcode + '">' +
-                        window.location.origin + '/' + data.shortcode +
-                        (data.existed ?
-                        '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
-                            : "")
-                        + '</a>'
-                    );
-                }
-            })
+            if($('#url').val().length == 0) {
+               $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
+                $('#url').css('border-color', 'red');
+            } else {
+            
+                $.post('/api/v1/shorten', {
+                    url: $('#url').val(),
+                    secret: $('#secret').val(),
+                    code: $('#code').val()
+                }, function (data) {
+    
+                    if (typeof data == 'string') {
+                        $('#shortcode').html(data)
+                    } else {
+                        $('#shortcode').html("Shortcode : " +
+                            (data.existed? "Already existed : ": "") +
+                            '<a href=' + '"/' + data.shortcode + '">' +
+                            window.location.origin + '/' + data.shortcode +
+                            (data.existed ?
+                            '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
+                                : "")
+                            + '</a>'
+                        );
+                    }
+                }) //post request ends here
+            } //end of if else block
         })
     })
 </script>

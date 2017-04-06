@@ -13,12 +13,19 @@ route.get('/:shortcode', (req, res, next) => {
         next();
     }
 
-    shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
+    shortner.expand(req.params.shortcode, req.headers.referer, function (URL,emailCheck,shortcode) {
+     if(!emailCheck){
         if (!URL) {
             next();
         } else {
             res.redirect(URL);
         }
+    }
+    else{
+         res.redirect(req.protocol + '://' + req.get('host') + '/Email' +'?q=' + shortcode);
+     }
+
+
     });
 
 });

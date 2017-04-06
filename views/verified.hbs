@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/admin/js/jquery.min.js"></script>
+    <script src="/admin/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="col-lg-4 col-lg-offset-4">
+    <div class="center-block">
+        <h1 align="center">Coding Blocks</h1>
+        <h2 align="center">URL Shortener</h2>
+        <h3 align="center">{{body}}</h3>
+
+        <h4>Redirecting in 3 seconds</h4>
+        <a href={{url}}>
+            <button align="center" type="button" class="btn-success">Now</button>
+        </a>
+    </div>
+</div>
+
+<script>
+
+
+    window.setTimeout(function () {
+        window.location.replace("{{url}}");
+    }, 3000);
+
+
+</script>
+
+</body>
+</html>

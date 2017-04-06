@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../admin/css/bootstrap.min.css">
+
+    <title>Enter Email</title>
+    <script type="text/javascript" src="../admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../admin/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="col-lg-4 col-lg-offset-4">
+    <div class="center-block">
+        <h1 align="center">Coding Blocks</h1>
+        <h2 align="center">URL Shortener</h2>
+    </div>
+    <div class="form-group row" style="margin-top: 10%">
+        <input class="form-control" id="email" type="text" placeholder="EMAIL" name="url">
+        <input class="form-control" id="password" type="password" placeholder="password" name="password">
+        <button class="btn center-block" id="submit" type="submit">GO</button>
+
+    </div>
+    <div id="shortcode"></div>
+</div>
+
+
+<script>
+
+    $('#submit').click(function () {
+        $('#submit').html("Loading...");
+        $.post('/addmail/' + window.location.href.substr(-5), {
+            email: $('#email').val(),
+            password : $('#password').val()
+        }).then(function (url) {
+            $('#submit').html("GO");
+
+            if(url==="invalid")
+                window.alert("Invalid Password");
+            else
+                window.location.replace(url);
+        });
+    });
+
+</script>
+
+
+</body>
+</html>

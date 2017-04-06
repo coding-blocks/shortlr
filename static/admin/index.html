@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Coding Blocks | URL Shortener</title>
+    <title>Title</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.min.js"></script>
@@ -12,41 +12,48 @@
 
 <div class="col-lg-4 col-lg-offset-4">
     <div class="center-block">
-        <h1 align="center" >Coding Blocks</h1>
-        <h2 align="center" >URL Shortener</h2>
+        <h1 align="center">Coding Blocks</h1>
+        <h2 align="center">URL Shortener</h2>
     </div>
     <div class="form-group row" style="margin-top: 20%">
         <input class="form-control" id="url" type="text" placeholder="URL" name="url">
         <input class="form-control" id="code" type="text" placeholder="custom shortcode (optional)" name="code">
-        <input class="form-control" id="secret" type="password" placeholder="secret (needed to make custom)" name="secret">
+        <input class="form-control" id="secret" type="password" placeholder="secret (needed to make custom)"
+               name="secret">
+
+        <span>Verified Link</span>
+        <input type="checkbox" id="reqEmail" name="isEmail">
+
 
         <button class="btn center-block" id="submit" type="submit">Create URL</button>
+
     </div>
     <div id="shortcode"></div>
 </div>
 <script>
     $(function () {
         $('#submit').click(function () {
-            if($('#url').val().length == 0) {
-               $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
+            if ($('#url').val().length == 0) {
+                $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
                 $('#url').css('border-color', 'red');
             } else {
-            
+
                 $.post('/api/v1/shorten', {
                     url: $('#url').val(),
                     secret: $('#secret').val(),
-                    code: $('#code').val()
+                    code: $('#code').val(),
+                    emailCheck : $('#reqEmail').is(':checked')
                 }, function (data) {
-    
+
                     if (typeof data == 'string') {
                         $('#shortcode').html(data)
                     } else {
                         $('#shortcode').html("Shortcode : " +
-                            (data.existed? "Already existed : ": "") +
+                            (data.existed ? "Already existed : " : "") +
                             '<a href=' + '"/' + data.shortcode + '">' +
                             window.location.origin + '/' + data.shortcode +
                             (data.existed ?
-                            '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
+                                '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
                                 : "")
                             + '</a>'
                         );
@@ -57,10 +64,17 @@
     })
 </script>
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-83327907-4', 'auto');
     ga('send', 'pageview');

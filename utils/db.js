@@ -64,14 +64,14 @@ const EmailIDs = sequelize.define('emailids', {
 const EmailVisitedURLs = sequelize.define('emailvisitedurls', {});
 
 
+EmailVisitedURLs.belongsTo(EmailIDs);
+EmailIDs.hasMany(EmailVisitedURLs);
 
 EmailVisitedURLs.belongsTo(URL);
 URL.hasMany(EmailVisitedURLs);
 
 
 
-EmailVisitedURLs.belongsTo(EmailIDs);
-EmailIDs.hasMany(EmailVisitedURLs);
 
 
 
@@ -79,9 +79,15 @@ sequelize.sync(); //Normal case
 //sequelize.sync({force: true}); //If schema changes NOTE: It will drop/delete old data
 
 function VerifiedHit(code, id) {
-    EmailVisitedURLs.create({
-        urlCode: code,
-        emailsIDId: id
+    EmailVisitedURLs.findOrCreate({
+        where : {
+            urlCode : code,
+            emailidId: id
+        },
+        defaults : {
+            urlCode: code,
+            emailidId: id
+        }
     });
 }
 

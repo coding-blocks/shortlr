@@ -44,7 +44,7 @@ npm install
   ```
   npm start
   ```
-  And see it working on port 4000. 
+  And see it working on http://localhost:4000/admin 
   
 ## Authors
 * Arnav Gupta -- [championswimmer](https://github.com/championswimmer)

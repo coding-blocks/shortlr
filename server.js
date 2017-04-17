@@ -3,9 +3,16 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const forceSSL = require('express-force-ssl');
 const config = require('./config.json');
 
 const app = express();
+
+app.set('forceSSLOptions', {
+    enable301Redirects: config.ENABLE_301_HTTPS_REDIRECT,
+    trustXFPHeader: config.TRUST_HTTPS_PROXY,
+    sslRequiredMessage: config.NON_HTTPS_REQUEST_ERRMSG
+});
 
 const shortner = require('./utils/shortner');
 const expressGa = require('express-ga-middleware');
@@ -23,16 +30,10 @@ const redirectToHome = function (req, res) {
     res.redirect('http://codingblocks.com')
 };
 
-app.use('/admin', function (req,res,next) {
-        if(req.secure || (! config.ALWAYS_HTTPS) ) {
-           //already on secure connection
-           return next();
-        }
-        res.redirect('https://' + req.headers.host + req.originalUrl );
-
-    },
-    express.static(__dirname + "/static/admin")
-);
+if (config.FORCE_HTTPS) {
+    app.use('/admin', forceSSL)
+}
+app.use('/admin', express.static(__dirname + "/static/admin"));
 
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 

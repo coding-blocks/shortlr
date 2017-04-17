@@ -23,14 +23,16 @@ const redirectToHome = function (req, res) {
     res.redirect('http://codingblocks.com')
 };
 
-app.use('/admin', (req,res,next)=>{
-   if(req.secure || (! config.ALWAYS_HTTPS) ) {
-       //already on secure connection
-       return next();
-   }
-    res.redirect('https://' + req.hostname + req.originalUrl );
+app.use('/admin', function (req,res,next) {
+        if(req.secure || (! config.ALWAYS_HTTPS) ) {
+           //already on secure connection
+           return next();
+        }
+        res.redirect('https://' + req.headers.host + req.originalUrl );
 
-},express.static(__dirname + "/static/admin") );
+    },
+    express.static(__dirname + "/static/admin")
+);
 
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 

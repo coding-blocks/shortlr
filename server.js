@@ -26,10 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-const redirectToHome = function (req, res,next) {
+const redirectToHome = function (req, res) {
     res.redirect('http://codingblocks.com')
 };
-const checkThisUrl = function (req,res) {
+const checkThisUrl = function (req,res,next) {
     if(req.header('host') == "cb.lk")
        return  res.send("You cannot shorten cb.lk links");
 
@@ -45,8 +45,7 @@ app.use('/admin', express.static(__dirname + "/static/admin"));
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 
 app.use(expressGa('UA-83327907-4'));
-app.use('/api/v1',checkThisUrl);
-app.use('/api/v1', route.api_v1);
+app.use('/api/v1',checkThisUrl,route.api_v1);
 app.use('/', route.shortcode);
 app.use(redirectToHome);
 

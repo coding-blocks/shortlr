@@ -4,8 +4,8 @@
 const express = require('express');
 const db = require('../utils/db');
 const bp = require('body-parser');
-const nm = require('nodemailer')
 const encode = require('hashcode').hashCode();
+const sg = require('sendgrid-nodejs').SendGrid;
 const shortener = require('../utils/shortner');
 
 
@@ -13,13 +13,7 @@ const router = express.Router();
 router.use(bp.json());
 router.use(bp.urlencoded({extended: true}));
 
-let transporter = nm.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'emailID',
-        pass: 'password'
-    }
-});
+let transporter = new sg('user','password');
 
 
 router.post('/:shortcode', function (req, res) {
@@ -31,31 +25,22 @@ router.post('/:shortcode', function (req, res) {
     }, function () {
         res.send(req.protocol + '://' + req.get('host') + '/addmail' + '/PleaseVerify');
     }, function (email) {
-
-
-        let mailsettings = {
-            from: '"Coding Blocks" <varun.gupta1798@gmail.com>',
-            to: email,
+        transporter.send({
+            to : email,
+            from : '"Coding Blocks" <email>',
             subject: 'Please Verify Your Email',
             text: 'Click on the link below to verify your email to access all the links provided by coding blocks \n' +
-            req.protocol + '://' + req.get('host') + '/addmail/verify/' + encode.value(email) + '/' + shortcode
-        };
+                req.protocol + '://' + req.get('host') + '/addmail/verify/' + encode.value(email) + '/' + shortcode
+        },function () {
+                db.addEmail(email, password, function (err) {
+                    if (err) throw err
 
-        transporter.sendMail(mailsettings, (err, info) => {
-            if (err) throw err;
-
-            db.addEmail(email, password, function (err) {
-                if (err) throw err
-
-                res.send(req.protocol + '://' + req.get('host') + '/addmail/thankyou');
-            });
-
+                    res.send(req.protocol + '://' + req.get('host') + '/addmail/thankyou');
+                });
         });
-
     },function () {
         res.send("invalid");
     });
-
 });
 
 

@@ -10,6 +10,7 @@ const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
 
 route.post('/shorten', function (req, res) {
     let url = req.body.url;
+    let emailCheck = req.body.emailCheck;
     var http = /^https?:\/\//i;
     if(http.test(url) == false)
         url = "http://"+url;
@@ -24,7 +25,7 @@ route.post('/shorten', function (req, res) {
         }
     }
 
-    shortner.shorten(url, code, function (shortcode, existed, longURL) {
+    shortner.shorten(url, code,emailCheck,  function (shortcode, existed, longURL) {
         res.send({
             shortcode, existed, longURL
         });

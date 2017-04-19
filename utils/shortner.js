@@ -19,7 +19,7 @@ const getRandomCode = function () {
 
 
 module.exports = {
-    shorten: function (url, code, done) {
+    shorten: function (url, code, emailCheck, done) {
 
         let alias = null;
 
@@ -35,7 +35,7 @@ module.exports = {
             }
         }
 
-        db.addUrl(code, url, alias, function (shortcode, existed, longURL) {
+        db.addUrl(code, url, alias, emailCheck, function (shortcode, existed, longURL) {
             done(shortcode, existed, longURL);
         }, function (error) {
             console.log(error);
@@ -43,9 +43,9 @@ module.exports = {
         });
 
     },
-    expand: function(shortcode, from, done) {
-        db.fetchUrl(r.from64(shortcode), from, function (url) {
-            done(url);
+    expand: function (shortcode, from, done) {
+        db.fetchUrl(r.from64(shortcode), from, function (url,emailCheck,code) {
+            done(url,emailCheck,r.to64(code));
         }, function (error) {
             console.log(error);
             done(null)

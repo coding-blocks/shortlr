@@ -15,9 +15,13 @@
     "express": "^4.14.0",
     "express-force-ssl": "^0.3.2",
     "express-ga-middleware": "^0.1.2",
+    "express-hbs": "^1.0.4",
+    "hashcode": "^1.0.3",
     "jquery": "^3.1.1",
+    "path": "^0.12.7",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
+    "sendgrid-nodejs": "0.1.0-2",
     "sequelize": "^3.27.0",
     "universal-analytics": "^0.4.8"
   }

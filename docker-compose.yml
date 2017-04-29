@@ -1,0 +1,19 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+     - "4000:4000"
+    volumes:
+     - .:/shortlr
+    depends_on:
+     - postgres
+    environment:
+     - NODE_MYSQL_HOST=postgres
+    command: ["./wait-for-it.sh","postgres:5432", "--", "npm", "start"]
+  postgres:
+    image: "postgres:latest"
+    environment:
+      POSTGRES_USER: shorturl
+      POSTGRES_DB: shorturl
+      POSTGRES_PASSWORD: shorturl

@@ -13,8 +13,9 @@ const DB_USER = process.env.SHORTURL_SQL_USER || "shorturl";
 const DB_PASS = process.env.SHORTURL_SQL_PASSWORD || "shorturl";
 const DB_NAME = process.env.SHORTURL_SQL_DBNAME || "shorturl";
 
+const DATABASE_URL = process.env.DATABASE_URL || ('postgres://' + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":5432/" + DB_NAME);
 
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+const sequelize = new Sequelize(DATABASE_URL, {
     host: DB_HOST,
     dialect: 'postgres',
 
@@ -27,24 +28,22 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 
 
 const URL = sequelize.define('url', {
-    code    : { type: Sequelize.BIGINT, primaryKey: true },
-    codeStr : {type: Sequelize.STRING, unique: true},
-    longURL : { type: Sequelize.STRING },
-    hits    : { type: Sequelize.INTEGER, defaultValue: 0 }
+    code: {type: Sequelize.BIGINT, primaryKey: true},
+    codeStr: {type: Sequelize.STRING, unique: true},
+    longURL: {type: Sequelize.STRING},
+    hits: {type: Sequelize.INTEGER, defaultValue: 0}
 });
 
 const Event = sequelize.define('event', {
-    time    : { type: Sequelize.DATE },
-    from    : { type: Sequelize.STRING }
+    time: {type: Sequelize.DATE},
+    from: {type: Sequelize.STRING}
 });
 
-const Alias = sequelize.define('alias', {
-
-});
+const Alias = sequelize.define('alias', {});
 
 const User = sequelize.define('user', {
-    username:   {type: Sequelize.STRING },
-    password:   {type: Sequelize.STRING }
+    username: {type: Sequelize.STRING},
+    password: {type: Sequelize.STRING}
 });
 
 Event.belongsTo(URL);
@@ -76,15 +75,17 @@ module.exports = {
             //TODO: handle longer than 9 with alias map
         }
     },
-    fetchUrl: function(code, from, done, failed) {
+    fetchUrl: function (code, from, done, failed) {
         URL.findById(code).then(function (url) {
             done(url.longURL);
             Event.create({
                 from: from,
                 time: new Date(),
                 urlCode: url.code
-            }).then(function () {url.increment('hits')});
-        }).catch(function(error) {
+            }).then(function () {
+                url.increment('hits')
+            });
+        }).catch(function (error) {
             failed(error)
         })
     },

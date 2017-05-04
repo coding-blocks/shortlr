@@ -46,6 +46,19 @@ npm install
   ```
   And see it working on http://localhost:4000/admin 
   
+
+## Deploying to Heroku
+
+```
+heroku create
+git push heroku master
+heroku open
+```
+
+Alternatively, you can deploy your own copy of the app using this button:
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Authors
 * Arnav Gupta -- [championswimmer](https://github.com/championswimmer)
 

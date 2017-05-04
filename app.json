@@ -1,0 +1,12 @@
+{
+  "name": "Shortlr",
+  "description": "An URL shortening service written in express",
+  "keywords": [
+    "nodejs",
+    "HTML5",
+    "express"
+  ],
+  "website": "https://codingblocks.com/",
+  "repository": "https://github.com/coding-blocks/shortlr",
+  "addons": ["heroku-postgresql:hobby-dev"]
+}

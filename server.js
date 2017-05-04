@@ -50,6 +50,6 @@ app.use('/', route.shortcode);
 app.use(redirectToHome);
 
 
-app.listen(4000, () => {
-    console.log("Listening on http://localhost:4000/");
+app.listen( process.env.PORT || 4000, () => {
+    console.log("Listening on http://localhost:" + (process.env.PORT || "4000") + "/");
 });

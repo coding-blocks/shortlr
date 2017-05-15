@@ -24,6 +24,11 @@ const route = {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.raw({
+    inflate: true,
+    limit: '100kb',
+    type: '*/*'
+}));
 
 
 const redirectToHome = function (req, res) {

@@ -1,80 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Coding Blocks | URL Shortener</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Coding Blocks | URL Shortener</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
 </head>
-<body>
 
-
-<div class="col-lg-4 col-lg-offset-4">
-    <div class="center-block">
-        <h1 align="center" >Coding Blocks</h1>
-        <h2 align="center" >URL Shortener</h2>
+<body class="bggrad">
+  <nav class="navbar-fixed-top">
+    <div class="nav-bar">
+      <div class="module left">
+        <a href="/">
+          <div class="vnu"><img class="logo logo-dark" alt="Foundry" src="https://codingblocks.com/img/cb/cb_tshirt_logo.png"></div>
+        </a>
+      </div>
+      <h2 class="vnu">URL SHORTNER</h2>
+      <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+        <i class="ti-menu"></i>
+      </div>
+      <div class="module-group right">
+        <div class="module left">
+          <ul class="menu">
+            <li>
+              <a href="https://blog.codingblocks.com/">Blog</a>
+            </li>
+            <li>
+              <a href="https://lab.codingblocks.com/">Labs</a>
+            </li>
+            <li>
+              <a href="https://bytecast.codingblocks.com/">Podcast</a>
+            </li>
+            <li>
+              <a title="Our Locations" href="/contactus">Contact Us</a>
+            </li>
+            <li>
+              <a title="Our Locations" href="/admin/stats">Stats</a>
+            </li>
+            <a class="btn btn-filled btn-sm hoverlight" href="/admin">Shorten</a>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="form-group row" style="margin-top: 20%">
-        <input class="form-control" id="url" type="text" placeholder="URL" name="url">
-        <input class="form-control" id="code" type="text" placeholder="custom shortcode (optional)" name="code">
-        <input class="form-control" id="secret" type="password" placeholder="secret (needed to make custom)" name="secret">
+  </nav>
 
-        <button class="btn center-block" id="submit" type="submit">Create URL</button>
+  <div class="col-lg-4 col-lg-offset-4 hovercard" style="margin-top: calc(10% - 64px); background: rgba(256,256,256,0.6);">
+    <div class="vnu"><img alt="Logo" class="center-block" width="80%" src="cblogo.png" style="padding: 30px 30px 20px;">
     </div>
-    <div id="shortcode"></div>
-</div>
-<script>
-    $(function () {
-        $('#submit').click(function () {
+    <div class="form-group row" style="margin-top: 5%;padding: 0px 30px 10px;">
+      <input class="form-control hovercard-light" id="url" type="text" placeholder="URL" name="url">
+      <input class="form-control hovercard-light" id="code" type="text" placeholder="Custom Shortcode (optional)" name="code">
+      <input class="form-control hovercard-light" id="secret" type="password" placeholder="Secret (needed to make custom)" name="secret">
+      <center><button class="btn btn-filled hover-light" style="padding: 0px 30px 0px;" id="submit" type="submit">Shorten</button></center>
+    </div>
+    <div style="padding: 0px 30px 10px;">
+      <div id="shortcode"></div>
+    </div>
+    <p style="padding: 0px 30px"><a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Privacy Policy</a> | <a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Terms of Service</a></p>
+  </div>
+  <script>
+    $(function() {
+      $('#submit').click(function() {
 
-            var URLregex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;  
+        var URLregex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 
-            if($('#url').val().length == 0) { 
+        if ($('#url').val().length == 0) {
 
-               $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
-                $('#url').css('border-color', 'red');
+          $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
+          $('#url').css('border-color', 'red');
 
-            } else if( URLregex.test($('#url').val()) == false) {
+        } else if (URLregex.test($('#url').val()) == false) {
 
-                 $('#shortcode').html('<div class=\'alert alert-warning\'><strong>Invalid URL format</strong> <p> The URL must be of form </br>\"www.example.com"\ </br> \"https://example.com\" </br> \"mailto:foo@bar.com\" </p> </div> ');
-                $('#url').css('border-color', 'red');
+          $('#shortcode').html('<div class=\'alert alert-warning\'><strong>Invalid URL format</strong> <p> The URL must be of form </br>\"www.example.com"\ </br> \"https://example.com\" </br> \"mailto:foo@bar.com\" </p> </div> ');
+          $('#url').css('border-color', 'red');
 
+        } else {
+
+          $.post('/api/v1/shorten', {
+            url: $('#url').val(),
+            secret: $('#secret').val(),
+            code: $('#code').val()
+          }, function(data) {
+
+            if (typeof data == 'string') {
+              $('#shortcode').html(data)
             } else {
-            
-                $.post('/api/v1/shorten', {
-                    url: $('#url').val(),
-                    secret: $('#secret').val(),
-                    code: $('#code').val()
-                }, function (data) {
-    
-                    if (typeof data == 'string') {
-                        $('#shortcode').html(data)
-                    } else {
-                        $('#shortcode').html("Shortcode : " +
-                            (data.existed? "Already existed : ": "") +
-                            '<a href=' + '"/' + data.shortcode + '">' +
-                            window.location.origin + '/' + data.shortcode +
-                            (data.existed ?
-                            '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL
-                                : "")
-                            + '</a>'
-                        );
-                    }
-                }) //post request ends here
-            } //end of if else block
-        })
+              $('#shortcode').html("<div class=\"shortcode hovercard-light\">" +
+                (data.existed ? "Already existed : " : "") +
+                '<a href=' + '"/' + data.shortcode + '">' +
+                window.location.origin + '/' + data.shortcode +
+                (data.existed ?
+                  '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL :
+                  "") +
+                '</a></div>'
+              );
+            }
+          }) //post request ends here
+        } //end of if else block
+      })
     })
-</script>
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  </script>
+
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-83327907-4', 'auto');
     ga('send', 'pageview');
-
-</script>
+  </script>
 </body>
+
 </html>

@@ -51,12 +51,17 @@ module.exports = {
             done(null)
         });
     },
-    stats: function (done, failed) {
-        db.urlStats(function (urls) {
-            done(urls)
-        }, function (err) {
-            console.log(err);
-            done(null)
-        })
+    stats: function (page,size,fullUrl) {
+        return db.urlStats({page,size}).then( ({urls,lastPage})=>{
+                    let nextPage= page==lastPage ? null : page+1;
+                    let prevPage = page==1 ? null : page-1 ;
+                    
+                    if(nextPage)
+                        nextPage = fullUrl + `?page=${nextPage}&size=${size}`;
+                    if(prevPage)
+                        prevPage = fullUrl + `?page=${prevPage}&size=${size}`;
+            
+                    return {urls,prevPage,nextPage,lastPage};
+                })
     }
 };

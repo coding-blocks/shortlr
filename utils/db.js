@@ -3,7 +3,6 @@
  */
 const Sequelize = require('sequelize');
 const r = require('convert-radix64');
-const RSVP = require('rsvp');
 
 //This is so that BIGINT is treated at integer in JS
 require('pg').defaults.parseInt8 = true;
@@ -91,21 +90,18 @@ module.exports = {
         })
     },
     urlStats: function ( {page,size} ) {
-    return  URL.count().then(cnt=> {
-                const offset = (page - 1) * size;
-                if (offset > cnt || offset < 0)
+   
+    const offset = (page - 1) * size;
+    return URL.findAndCountAll({
+                order : [ [ 'hits', 'DESC' ] ],
+                limit : size,
+                offset: offset
+            }).then(data=>{
+                if (offset > data.count || offset < 0)
                     throw new Error('Pagination Error : Out of Error Range');
-                
-                const lastPage = Math.ceil(cnt/size);
-                return {offset,lastPage};
         
-            }).then( ({offset,lastPage})=>{
-                const urls = URL.findAll({
-                                order : [ [ 'hits', 'DESC' ] ],
-                                limit : size,
-                                offset: offset
-                            });
-                return RSVP.hash({urls,lastPage});
+                const lastPage = Math.ceil(data.count/size);
+                return { urls : data.rows,lastPage};
             });
     }
 };

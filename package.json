@@ -18,7 +18,6 @@
     "jquery": "^3.1.1",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
-    "rsvp": "^3.5.0",
     "sequelize": "^3.27.0",
     "universal-analytics": "^0.4.8"
   }

@@ -1630,9 +1630,14 @@ ul.lead li {
 @media (max-width: 1024px)
 {
   .formbox{
-    width: 80%!important;
-    margin-top: calc(16% - 64px);
-    margin-left:10%;
-    margin-right:10%;
+    width: 90%!important;
+    margin-top: calc(30% - 64px);
+    margin-left:5%;
+    margin-right:5%;
+  }
+  .form-control{
+    height: 60px!important;
+    width: 90%;
+    margin-bottom: 5%;
   }
 }

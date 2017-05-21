@@ -1586,9 +1586,6 @@ ul.lead li {
   border-color: #f5f5f5!important;
 }
 
-.formbox{
-  height: auto;
-}
 .colw70 {
   max-width: 70%;
   margin-left: 15%;
@@ -1622,4 +1619,20 @@ ul.lead li {
   font-weight: normal;
   text-align: center;
   text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
+}
+.formbox{
+  width:30%;
+  margin-left:36%;
+  margin-right:36%;
+  margin-top: calc(8% - 64px);
+}
+
+@media (max-width: 1024px)
+{
+  .formbox{
+    width: 80%!important;
+    margin-top: calc(16% - 64px);
+    margin-left:10%;
+    margin-right:10%;
+  }
 }

@@ -1631,6 +1631,9 @@ ul.lead li {
 {
   .container{
     padding: 0px 0px!important;
+    margin-right: 0px!important;
+    margin-left: 0px!important;
+    width: 100%!important;
   }
   .formbox{
     width: 100%!important;
@@ -1655,5 +1658,13 @@ ul.lead li {
   }
   .btn{
     font-size: 20px!important;
+  }
+  .colw70 {
+    max-width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .center-block{
+    padding: 10px 0px!important;
   }
 }

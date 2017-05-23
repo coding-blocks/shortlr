@@ -9,46 +9,18 @@
   <script src="../js/bootstrap.min.js"></script>
   <link href="/admin/css/stylesheet.css" rel="stylesheet">
   <link href="/admin/css/symentic.css" rel="stylesheet">
+  <link href="https://codingblocks.com/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="https://codingblocks.com/css/themify-icons.css" rel="stylesheet" type="text/css" media="all" />
+  <script>
+      $(function () {
+          $('.nav-container').load('/admin/includes/nav-container.html');
+      });
+  </script>
 </head>
 
 <body class="bggrad">
+<div class="nav-container"></div>
   <div class="container">
-
-    <nav class="navbar-fixed-top">
-      <div class="nav-bar">
-        <div class="module left">
-          <a href="/">
-            <div class="vnu"><img class="logo logo-dark" alt="Foundry" src="https://codingblocks.com/img/cb/cb_tshirt_logo.png"></div>
-          </a>
-        </div>
-        <h2 class="vnu">URL SHORTNER</h2>
-        <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
-          <i class="ti-menu"></i>
-        </div>
-        <div class="module-group right">
-          <div class="module left">
-            <ul class="menu">
-              <li>
-                <a href="https://blog.codingblocks.com/">Blog</a>
-              </li>
-              <li>
-                <a href="https://lab.codingblocks.com/">Labs</a>
-              </li>
-              <li>
-                <a href="https://bytecast.codingblocks.com/">Podcast</a>
-              </li>
-              <li>
-                <a title="Our Locations" href="/contactus">Contact Us</a>
-              </li>
-              <li>
-                <a title="Our Locations" href="/admin/stats">Stats</a>
-              </li>
-              <a class="btn btn-filled btn-sm hoverlight" href="/admin">Shorten</a>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
     <div class="col-lg-12 colw70" style="margin-bottom:30px;">
       <div class="center-block" style="margin-top: 36px; padding: 10px 30px;">
         <center><button id="refresh" style="margin-top:5%;" class="btn btn-filled hover-light">Refresh</button></center>

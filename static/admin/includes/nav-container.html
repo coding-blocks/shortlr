@@ -1,0 +1,63 @@
+<nav class="navbar-fixed-top">
+    <div class="nav-bar">
+        <div class="module left">
+            <a href="/">
+                <div class="vnu"><img class="logo logo-dark" alt="Foundry" src="https://codingblocks.com/img/cb/cb_tshirt_logo.png"></div>
+            </a>
+        </div>
+        <h2 class="vnu">URL SHORTNER</h2>
+        <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+            <i class="ti-menu"></i>
+        </div>
+        <div class="module-group right">
+            <div class="module left">
+                <ul class="menu">
+                    <li>
+                        <a href="https://blog.codingblocks.com/">Blog</a>
+                    </li>
+                    <li>
+                        <a href="https://lab.codingblocks.com/">Labs</a>
+                    </li>
+                    <li>
+                        <a href="https://bytecast.codingblocks.com/">Podcast</a>
+                    </li>
+                    <li>
+                        <a title="Our Locations" href="/contactus">Contact Us</a>
+                    </li>
+                    <li>
+                        <a title="Our Locations" href="/admin/stats">Stats</a>
+                    </li>
+                    <a class="btn btn-filled btn-sm hoverlight" href="/admin">Shorten</a>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            $('.mobile-toggle').click(function() {
+                $('.nav-bar').toggleClass('nav-open');
+                $(this).toggleClass('active');
+            });
+            $('.menu li').click(function(e) {
+                if (!e) e = window.event;
+                e.stopPropagation();
+                if ($(this).find('ul').length) {
+                    $(this).toggleClass('toggle-sub');
+                } else {
+                    $(this).parents('.toggle-sub').removeClass('toggle-sub');
+                }
+            });
+            $('.menu li a').click(function() {
+                if ($(this).hasClass('inner-link')){
+                    $(this).closest('.nav-bar').removeClass('nav-open');
+                }
+            });
+            $('.module.widget-handle').click(function() {
+                $(this).toggleClass('toggle-widget-handle');
+            });
+            $('.search-widget-handle .search-form input').click(function(e){
+                if (!e) e = window.event;
+                e.stopPropagation();
+            });
+        </script>
+    </div>
+</nav>

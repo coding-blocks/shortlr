@@ -1639,8 +1639,18 @@ ul.lead li {
     height: 60px!important;
     width: 90%;
     margin-bottom: 5%;
+    font-size: 20px!important;
   }
   .mimg{
     width:  50%;
+  }
+  .menu li a{
+    font-size: 20px!important;
+  }
+  .nav-bar h2{
+    font-size: 30px!important;
+  }
+  .btn{
+    font-size: 20px!important;
   }
 }

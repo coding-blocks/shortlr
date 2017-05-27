@@ -89,14 +89,19 @@ module.exports = {
             failed(error)
         })
     },
-    urlStats: function (done, failed) {
-        URL.findAll({
-            order: [['hits', 'DESC']],
-            limit: 50
-        }).then(function (urls) {
-            done(urls);
-        }).catch(function (error) {
-            failed(error)
-        })
+    urlStats: function ( {page,size} ) {
+   
+    const offset = (page - 1) * size;
+    return URL.findAndCountAll({
+                order : [ [ 'hits', 'DESC' ] ],
+                limit : size,
+                offset: offset
+            }).then(data=>{
+                if (offset > data.count || offset < 0)
+                    throw new Error('Pagination Error : Out of Error Range');
+        
+                const lastPage = Math.ceil(data.count/size);
+                return { urls : data.rows,lastPage};
+            });
     }
 };

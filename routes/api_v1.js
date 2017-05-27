@@ -2,6 +2,7 @@
  * Created by championswimmer on 14/12/16.
  */
 const express = require('express');
+const config = require('../config.json');
 const route = express.Router();
 
 const shortner = require('../utils/shortner');
@@ -60,9 +61,17 @@ route.get('/expand/:shortcode', function (req, res) {
 });
 
 route.get('/stats', function (req, res) {
-    shortner.stats(function (urls) {
-        res.send(urls)
-    }, function (error) {
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl.split("?").shift() ;
+
+    let {page,size} = req.query ;
+    page = parseInt(page) || 1;
+    size = parseInt(size) || config.PAGINATION_SIZE;
+
+    shortner.stats(page,size,fullUrl).then( ({urls,prevPage,nextPage,lastPage})=>{
+        const meta = { prevPage,nextPage,lastPage };
+        res.json({urls,meta});
+    }).catch(err=>{
+        console.error(err);
         res.send ({
             code: 501,
             message: "Error occured"

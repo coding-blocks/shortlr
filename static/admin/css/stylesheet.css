@@ -1586,9 +1586,6 @@ ul.lead li {
   border-color: #f5f5f5!important;
 }
 
-.formbox{
-  height: auto;
-}
 .colw70 {
   max-width: 70%;
   margin-left: 15%;
@@ -1622,4 +1619,52 @@ ul.lead li {
   font-weight: normal;
   text-align: center;
   text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
+}
+.formbox{
+  width:30%;
+  margin-left:36%;
+  margin-right:36%;
+  margin-top: calc(8% - 64px);
+}
+
+@media (max-width: 1024px)
+{
+  .container{
+    padding: 0px 0px!important;
+    margin-right: 0px!important;
+    margin-left: 0px!important;
+    width: 100%!important;
+  }
+  .formbox{
+    width: 100%!important;
+    margin-top: calc(30% - 64px);
+    margin-left:0%;
+    margin-right:0%;
+  }
+  .form-control{
+    height: 60px!important;
+    width: 90%;
+    margin-bottom: 5%;
+    font-size: 20px!important;
+  }
+  .mimg{
+    width:  50%;
+  }
+  .menu li a{
+    font-size: 20px!important;
+  }
+  .nav-bar h2{
+    font-size: 30px!important;
+  }
+  .btn{
+    font-size: 20px!important;
+  }
+  .colw70 {
+    max-width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .center-block{
+    padding: 10px 0px!important;
+  }
 }

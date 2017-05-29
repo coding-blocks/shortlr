@@ -6,54 +6,26 @@
   <title>Coding Blocks | URL Shortener</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/stylesheet.css" rel="stylesheet">
+  <link href="https://codingblocks.com/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+  <link href="https://codingblocks.com/css/themify-icons.css" rel="stylesheet" type="text/css" media="all" />
   <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.min.js"></script>
+  <script>
+      $(function () {
+          $('.nav-container').load('/admin/includes/nav-container.html');
+      });
+  </script>
 </head>
 
 <body class="bggrad">
-  <nav class="navbar-fixed-top">
-    <div class="nav-bar">
-      <div class="module left">
-        <a href="/">
-          <div class="vnu"><img class="logo logo-dark" alt="Foundry" src="https://codingblocks.com/img/cb/cb_tshirt_logo.png"></div>
-        </a>
-      </div>
-      <h2 class="vnu">URL SHORTNER</h2>
-      <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
-        <i class="ti-menu"></i>
-      </div>
-      <div class="module-group right">
-        <div class="module left">
-          <ul class="menu">
-            <li>
-              <a href="https://blog.codingblocks.com/">Blog</a>
-            </li>
-            <li>
-              <a href="https://lab.codingblocks.com/">Labs</a>
-            </li>
-            <li>
-              <a href="https://bytecast.codingblocks.com/">Podcast</a>
-            </li>
-            <li>
-              <a title="Our Locations" href="/contactus">Contact Us</a>
-            </li>
-            <li>
-              <a title="Our Locations" href="/admin/stats">Stats</a>
-            </li>
-            <a class="btn btn-filled btn-sm hoverlight" href="/admin">Shorten</a>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
+<div class="nav-container"></div>
   <div id="homeHeading" class="col-lg-12 center-block" style="top:6%;transform:translateY(-6%);">
     <h2 class="home_heading">A Link Contains a lot more than you think</h2>
     <h3 class="home_subheading">Shorten and Share your links with Coding Blocks URL Shortner</h3>
     <!--<center><button class="btn btn-lg btn-filled hover-light" style="padding: 0px 30px 0px;transition: all 300ms linear;" id="shortForm" type="submit">SHORTEN</button></center>-->
   </div>
 
-  <div id="shortcodeform" class="col-lg-4 col-lg-offset-4 hovercard" style="margin-top: calc(8% - 64px); background: rgba(256,256,256,0.6); width:28%; margin-left:36%; margin-right:36%;">
-    <div class="vnu"><img alt="Logo" class="center-block" width="80%" src="cblogo.png" style="padding: 10px 30px 10px;">
+  <div id="shortcodeform" class="col-lg-12 col-lg-offset-12 hovercard formbox" style="background: rgba(256,256,256,0.6);">
+    <div class="vnu"><img alt="Logo" class="center-block mimg" width="80%" src="cblogo.png" style="padding: 10px 30px 10px;">
     </div>
     <div class="form-group row" style="margin-top: 5%;padding: 0px 30px 10px;">
       <input class="form-control center-block hovercard-light" id="url" type="text" placeholder="URL" name="url">

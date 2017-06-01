@@ -1627,6 +1627,18 @@ ul.lead li {
   margin-top: calc(8% - 64px);
 }
 
+.mimg {
+    background: #f81f27;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.formbox {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
 @media (max-width: 1024px)
 {
   .container{
@@ -1648,7 +1660,7 @@ ul.lead li {
     font-size: 20px!important;
   }
   .mimg{
-    width:  50%;
+    width: 100%;
   }
   .menu li a{
     font-size: 20px!important;
@@ -1663,8 +1675,5 @@ ul.lead li {
     max-width: 100%;
     margin-left: 0%;
     margin-right: 0%;
-  }
-  .center-block{
-    padding: 10px 0px!important;
   }
 }

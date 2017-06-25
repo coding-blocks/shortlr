@@ -1604,6 +1604,12 @@ ul.lead li {
   transition: all 300ms linear
 }
 
+.btn.copy{
+  float: right;
+  margin-top: -7px;
+  margin-right: -13px;
+  min-width: 10px;
+}
 .home_heading{
   color: #fff;
   font-size: 44px;

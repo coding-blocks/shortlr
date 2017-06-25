@@ -34,7 +34,9 @@
       <center><button class="btn btn-filled hover-light" style="padding: 0px 30px 0px;" id="submit" type="submit">Shorten</button></center>
     </div>
     <div style="padding: 0px 30px 10px;">
-      <div id="shortcode"></div>
+      <div id="shortcode">
+
+      </div>
     </div>
     <p style="padding: 0px 30px"><a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Privacy Policy</a> | <a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Terms of Service</a></p>
   </div>
@@ -82,11 +84,21 @@
                   "") +
                 '</a></div>'
               );
+                $('.shortcode.hovercard-light').append(`<button class="btn btn-filled hover-light copy"> Copy </button>`);
             }
           }) //post request ends here
         } //end of if else block
       })
-    })
+    });
+      
+      $('#shortcode').on('click', '.shortcode button', function () {
+
+          var range = document.createRange();
+          range.selectNode($('.shortcode a')[0]);
+          window.getSelection().addRange(range);
+          document.execCommand("Copy");
+          window.alert('Link Copied to your clipboard')
+      });
   </script>
 
   <script>

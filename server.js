@@ -19,7 +19,8 @@ const expressGa = require('express-ga-middleware');
 
 const route = {
     api_v1: require('./routes/api_v1'),
-    shortcode: require('./routes/shortcode')
+    shortcode: require('./routes/shortcode'),
+    auth: require('./routes/auth')
 };
 
 app.use(bodyParser.json());
@@ -46,6 +47,7 @@ app.use('/.well-known', express.static(__dirname + "/.well-known"));
 app.use(expressGa('UA-83327907-4'));
 app.use('/api/v1', route.api_v1);
 app.use('/', route.shortcode);
+app.use('/auth', route.auth);
 app.use(redirectToHome);
 
 

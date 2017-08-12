@@ -10,15 +10,17 @@
   "author": "",
   "license": "GPL-2.0",
   "dependencies": {
-    "body-parser": "^1.15.2",
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
     "convert-radix64": "^0.2.0",
-    "express": "^4.14.0",
+    "express": "^4.15.4",
     "express-force-ssl": "^0.3.2",
-    "express-ga-middleware": "^0.1.2",
-    "jquery": "^3.1.1",
-    "pg": "^6.1.0",
+    "express-ga-middleware": "^0.1.5",
+    "jquery": "^3.2.1",
+    "pg": "^6.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.27.0",
-    "universal-analytics": "^0.4.8"
+    "sequelize": "^3.30.4",
+    "uid2": "0.0.3",
+    "universal-analytics": "^0.4.15"
   }
 }

@@ -42,8 +42,8 @@ const Event = sequelize.define('event', {
 const Alias = sequelize.define('alias', {});
 
 const User = sequelize.define('user', {
-    username: {type: Sequelize.STRING},
-    password: {type: Sequelize.STRING}
+    name: {type: Sequelize.STRING},
+    email: {type: Sequelize.STRING}
 });
 
 Event.belongsTo(URL);

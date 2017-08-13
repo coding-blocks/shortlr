@@ -42,11 +42,22 @@ const Event = sequelize.define('event', {
 const Alias = sequelize.define('alias', {});
 
 const User = sequelize.define('user', {
-    username: {type: Sequelize.STRING},
-    password: {type: Sequelize.STRING}
+    name: {type: Sequelize.STRING},
+    email: {type: Sequelize.STRING}
 });
 
 Event.belongsTo(URL);
+
+
+const OneAuth = db.define('authtoken',{
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+    oneauthId: Sequelize.INTEGER,
+    oneauthToken: Sequelize.STRING,
+    token: Sequelize.STRING
+});
+
+OneAuth.belongsTo(User);
+User.hasMany(OneAuth);
 
 sequelize.sync(); //Normal case
 //sequelize.sync({force: true}); //If schema changes NOTE: It will drop/delete old data
@@ -103,5 +114,67 @@ module.exports = {
                 const lastPage = Math.ceil(data.count/size);
                 return { urls : data.rows,lastPage};
             });
+    },
+    authFunction: function (authtoken, done) {
+      OneAuth.findOne({
+        where: {
+          oneauthToken: authtoken.data.access_token
+        }
+      }).then(function (oneauth) {
+        if (oneauth !== null) {
+          done({
+            success: true,
+            token: oneauth.token
+          })
+        }
+        else {
+          axios.get('https://account.codingblocks.com/api/users/me', {
+            headers: {'Authorization': `Bearer ${authtoken.data.access_token}`}
+          }).then(function (user) {
+            OneAuth.create({
+              user: {
+                name: user.data.firstname + " " + user.data.lastname,
+                email: user.data.email
+              }
+              , oneauthToken: authtoken.data.access_token
+              , token: uid(30)
+            },{
+              include: [models.User]
+            }).then(function (oneauthFinal) {
+              done({
+                success: true,
+                token: oneauthFinal.token
+              })
+            }).catch(function (err) {
+              console.log(err);
+              done({
+                success: false
+                , code: "500"
+                , error: {
+                  message: "Could not create in Oneauth Table(Internal Server Error)."
+                }
+              })
+            })
+          }).catch(function (err) {
+            console.log(err);
+            done({
+              success: false
+              , code: "500"
+              , error: {
+                message: "Could not get details from Oneauth API(Internal Server Error)."
+              }
+            })
+          })
+        }
+      }).catch(function (err) {
+        console.log(err);
+        done({
+          success: false
+          , code: "500"
+          , error: {
+            message: "Could not find in Oneauth(Internal Server Error)."
+          }
+        })
+      })
     }
 };

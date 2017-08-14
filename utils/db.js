@@ -49,7 +49,7 @@ const User = sequelize.define('user', {
 Event.belongsTo(URL);
 
 
-const OneAuth = db.define('authtoken',{
+const OneAuth = sequelize.define('authtoken',{
     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
     oneauthId: Sequelize.INTEGER,
     oneauthToken: Sequelize.STRING,
@@ -119,12 +119,14 @@ module.exports = {
       OneAuth.findOne({
         where: {
           oneauthToken: authtoken.data.access_token
-        }
+        },
+        include: User
       }).then(function (oneauth) {
         if (oneauth !== null) {
           done({
             success: true,
-            token: oneauth.token
+            token: oneauth.token,
+            user: oneauth.user.name
           })
         }
         else {
@@ -139,11 +141,12 @@ module.exports = {
               , oneauthToken: authtoken.data.access_token
               , token: uid(30)
             },{
-              include: [models.User]
+              include: [User]
             }).then(function (oneauthFinal) {
               done({
                 success: true,
-                token: oneauthFinal.token
+                token: oneauthFinal.token,
+                user: user.data.firstname + " " + user.data.lastname
               })
             }).catch(function (err) {
               console.log(err);

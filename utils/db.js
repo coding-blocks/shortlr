@@ -59,6 +59,12 @@ const OneAuth = sequelize.define('authtoken',{
 OneAuth.belongsTo(User);
 User.hasMany(OneAuth);
 
+const Group = sequelize.define('group',{
+  id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  groupName: Sequelize.STRING
+});
+
+
 sequelize.sync(); //Normal case
 //sequelize.sync({force: true}); //If schema changes NOTE: It will drop/delete old data
 
@@ -101,7 +107,7 @@ module.exports = {
         })
     },
     urlStats: function ( {page,size} ) {
-   
+
     const offset = (page - 1) * size;
     return URL.findAndCountAll({
                 order : [ [ 'hits', 'DESC' ] ],
@@ -110,7 +116,7 @@ module.exports = {
             }).then(data=>{
                 if (offset > data.count || offset < 0)
                     throw new Error('Pagination Error : Out of Error Range');
-        
+
                 const lastPage = Math.ceil(data.count/size);
                 return { urls : data.rows,lastPage};
             });
@@ -179,5 +185,9 @@ module.exports = {
           }
         })
       })
+    },
+    models: {
+      Group
     }
+
 };

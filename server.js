@@ -41,7 +41,6 @@ if (config.FORCE_HTTPS) {
     app.use('/admin', forceSSL)
 }
 app.use('/admin', express.static(__dirname + "/static/admin"));
-
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 
 app.use(expressGa('UA-83327907-4'));

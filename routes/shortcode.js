@@ -20,7 +20,6 @@ route.get('/:groupName/:shortcode', (req, res, next) => {
     where: {groupName: groupName},
   }).then(function (group) {
     if (group) {
-      console.log("Group");
       tempCode = "" + group.id + tempCode;
       while (tempCode.length < 9) {
         tempCode = tempCode + "0";

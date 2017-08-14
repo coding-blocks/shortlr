@@ -48,8 +48,6 @@ route.post('/shorten', function (req, res) {
       while (tempCode.length < 9) {
         tempCode = tempCode + "0";
       }
-      console.log("*****************")
-      console.log(tempCode);
       code = tempCode;
 
       if (code && code.length > 9) {
@@ -57,8 +55,6 @@ route.post('/shorten', function (req, res) {
         return res.send("We do not support larger than 9 character")
       }
       shortner.shorten(url, code, function (shortcode, existed, longURL) {
-        console.log("11111111111111111111")
-        console.log(shortcode)
         if (shortcode === code) {
           return res.send({
             shortcode: req.body.code, existed, longURL

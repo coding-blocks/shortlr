@@ -14,6 +14,20 @@
           $('.nav-container').load('/admin/includes/nav-container.html');
       });
   </script>
+  <script>
+    var arr = window.location.href.split("=");
+    if(arr.length === 2){
+      $.post('/auth',{code: arr[1]}, function (authtoken) {
+        if(authtoken.success === true){
+          localStorage.setItem("authtoken", authtoken.token);
+          $('#login-button').remove();
+          $('#menu').append('<li><a href="#">'+authtoken.user+'</a></li>');
+        }else{
+          window.location.replace("/admin");
+        }
+      })
+    }
+  </script>
 </head>
 
 <body class="bggrad">

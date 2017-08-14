@@ -4,11 +4,14 @@
 const express = require('express');
 const config = require('../config.json');
 const route = express.Router();
+const models = require('./../utils/db').models;
 
 const shortner = require('../utils/shortner');
 const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
+
 const SHORTENER_LONGURL_SECRET = process.env.SHORTURL_LONGURL_SECRET || "cb@123";
 const db = require('./../utils/db');
+const SHORTENER_GROUP_SECRET = process.env.SHORTURL_GROUP_SECRET || "cb@321"
 
 route.post('/shorten', function (req, res) {
   let url = req.body.url;
@@ -17,20 +20,66 @@ route.post('/shorten', function (req, res) {
     url = "http://" + url;
   let secret = req.body.secret;
   let code = null;
-  if (secret == SHORTENER_SECRET) {
+
+  let shortCode = req.body.code.split('/');
+  if (shortCode.length == 1 && secret == SHORTENER_SECRET) {
     console.log('Using secret');
     code = req.body.code;
     if (code && code.length > 9) {
       console.log('Too long code');
       return res.send("We do not support larger than 9 character")
     }
+    shortner.shorten(url, code, function (shortcode, existed, longURL) {
+      return res.send({
+        shortcode, existed, longURL
+      });
+    });
   }
 
-  shortner.shorten(url, code, function (shortcode, existed, longURL) {
-    res.send({
-      shortcode, existed, longURL
+  else if (secret == SHORTENER_GROUP_SECRET) {
+    console.log("Creating Group Secret");
+    const groupName = shortCode[0];
+    let tempCode = shortCode[1];
+
+    models.Group.findOrCreate({
+      where: {groupName: groupName},
+      defaults: {
+        groupName: groupName
+      }
+    }).spread(function (group, created) {
+      tempCode = group.id + tempCode;
+      while (tempCode.length < 9) {
+        tempCode = tempCode + "0";
+      }
+      code = tempCode;
+
+      if (code && code.length > 9) {
+        console.log('Too long code');
+        return res.send("We do not support larger than 9 character")
+      }
+      shortner.shorten(url, code, function (shortcode, existed, longURL) {
+        if (shortcode === code) {
+          return res.send({
+            shortcode: req.body.code, existed, longURL
+          });
+        }
+        return res.send({
+          shortcode, existed, longURL
+        });
+      });
+    }).catch(function (err) {
+      console.log(err);
+      return res.send("Internal Server Error");
     });
-  });
+
+  } else {
+    shortner.shorten(url, code, function (shortcode, existed, longURL) {
+      res.send({
+        shortcode, existed, longURL
+      });
+    });
+  }
+
 });
 
 route.get('/expand/:shortcode', function (req, res) {
@@ -68,7 +117,6 @@ route.post('/longURL/expand', function (req, res) {
       message: "Wrong secret Code"
     })
   }
-  console.log(req.query.longcode);
   db.fetchLongUrl(req.query.longcode, function (urls) {
     if (urls.length === 0) {
       return res.send({
@@ -83,7 +131,8 @@ route.post('/longURL/expand', function (req, res) {
     }
   })
 
-});
+})
+;
 
 route.get('/stats', function (req, res) {
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl.split("?").shift();

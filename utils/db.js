@@ -59,6 +59,12 @@ const OneAuth = sequelize.define('authtoken', {
 OneAuth.belongsTo(User);
 User.hasMany(OneAuth);
 
+const Group = sequelize.define('group', {
+  id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  groupName: Sequelize.STRING
+});
+
+
 sequelize.sync(); //Normal case
 //sequelize.sync({force: true}); //If schema changes NOTE: It will drop/delete old data
 
@@ -191,5 +197,10 @@ module.exports = {
         }
       })
     })
-  }
+  },
+  models:
+    {
+      Group
+    }
+
 };

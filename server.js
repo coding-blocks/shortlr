@@ -41,7 +41,6 @@ if (config.FORCE_HTTPS) {
     app.use('/admin', forceSSL)
 }
 app.use('/admin', express.static(__dirname + "/static/admin"));
-
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 
 app.use(expressGa('UA-83327907-4'));
@@ -51,6 +50,6 @@ app.use('/auth', route.auth);
 app.use(redirectToHome);
 
 
-app.listen( process.env.PORT || 4000, () => {
+app.listen( process.env.PORT || 4001, () => {
     console.log("Listening on http://localhost:" + (process.env.PORT || "4000") + "/");
 });

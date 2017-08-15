@@ -8,6 +8,9 @@ const models = require('./../utils/db').models;
 
 const shortner = require('../utils/shortner');
 const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
+
+const SHORTENER_LONGURL_SECRET = process.env.SHORTURL_LONGURL_SECRET || "cb@123";
+const db = require('./../utils/db');
 const SHORTENER_GROUP_SECRET = process.env.SHORTURL_GROUP_SECRET || "cb@321"
 
 route.post('/shorten', function (req, res) {
@@ -77,7 +80,6 @@ route.post('/shorten', function (req, res) {
     });
   }
 
-
 });
 
 route.get('/expand/:shortcode', function (req, res) {
@@ -107,6 +109,30 @@ route.get('/expand/:shortcode', function (req, res) {
   }
 
 });
+
+route.post('/longURL/expand', function (req, res) {
+  if (req.body.secret !== SHORTENER_LONGURL_SECRET) {
+    return res.send({
+      status: 401,
+      message: "Wrong secret Code"
+    })
+  }
+  db.fetchLongUrl(req.query.longcode, function (urls) {
+    if (urls.length === 0) {
+      return res.send({
+        status: 404,
+        message: 'No Shortlinks found for this URL'
+      })
+    } else {
+      return res.send({
+        status: 200,
+        urls: urls
+      })
+    }
+  })
+
+})
+;
 
 route.get('/stats', function (req, res) {
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl.split("?").shift();

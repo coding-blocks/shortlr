@@ -3,17 +3,21 @@
  */
 const Sequelize = require('sequelize');
 const r = require('convert-radix64');
+const secrets = require('../secrets');
+
 
 //This is so that BIGINT is treated at integer in JS
 require('pg').defaults.parseInt8 = true;
 //We have made sure that we do not use integers larger than 2^53 in our logic
 
-const DB_HOST = process.env.NODE_MYSQL_HOST || "localhost";
-const DB_USER = process.env.SHORTURL_SQL_USER || "shorturl";
-const DB_PASS = process.env.SHORTURL_SQL_PASSWORD || "shorturl";
-const DB_NAME = process.env.SHORTURL_SQL_DBNAME || "shorturl";
+const DB_HOST = secrets.DB.HOST || "localhost";
+const DB_USER = secrets.DB.USERNAME || "shorturl";
+const DB_PASS = secrets.DB.PASSWORD || "shorturl";
+const DB_NAME = secrets.DB.DB_NAME || "shorturl";
+const DB_PORT = secrets.DB.PORT || 5432;
 
-const DATABASE_URL = process.env.DATABASE_URL || ('postgres://' + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":5432/" + DB_NAME);
+const DATABASE_URL = process.env.SHORTLR_DATABASE_URL ||
+  (`postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
 const sequelize = new Sequelize(DATABASE_URL, {
   host: DB_HOST,

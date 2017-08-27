@@ -5,7 +5,6 @@
 $(function () {
   $('.nav-container').load('/admin/includes/nav-container.html', function () {
     let search = $('#searchByLongUrl');
-    console.log(search)
     search.attr('title', 'Shorten');
     search.attr('href', '/admin');
     search.text('Shorten');

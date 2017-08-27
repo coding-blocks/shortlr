@@ -8,6 +8,7 @@
     <link href="/admin/css/stylesheet.css" rel="stylesheet">
     <link href="https://codingblocks.com/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
     <link href="https://codingblocks.com/css/themify-icons.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/admin/css/index.css" rel="stylesheet" type="text/css" media="all">
     <script src="/admin/js/jquery.min.js"></script>
     <script src="/admin/js/search.js"></script>
     <script src="/admin/js/analytics.js"></script>
@@ -15,31 +16,33 @@
 
 <body class="bggrad">
 <div class="nav-container"></div>
-<div id="homeHeading" class="col-lg-12 center-block" style="top:6%;transform:translateY(-6%);">
+<div id="homeHeading" class="col-lg-12 center-block">
     <h2 class="home_heading">A Link Contains a lot more than you think</h2>
     <h3 class="home_subheading">Shorten and Share your links with Coding Blocks URL Shortner</h3>
-    <!--<center><button class="btn btn-lg btn-filled hover-light" style="padding: 0px 30px 0px;transition: all 300ms linear;" id="shortForm" type="submit">SHORTEN</button></center>-->
+    <!--<center><button class="btn btn-lg btn-filled hover-light" id="shortForm" type="submit">SHORTEN</button></center>-->
 </div>
 
-<div id="shortcodeform" class="col-lg-12 col-lg-offset-12 hovercard formbox" style="background: rgba(256,256,256,0.6);">
+<div id="shortcodeform" class="col-lg-12 col-lg-offset-12 hovercard formbox">
     <div class="vnu"><img alt="Logo" class="center-block mimg" width="80%" src="/admin/img/logo.png">
     </div>
-    <div class="form-group row" style="margin-top: 5%;padding: 0px 30px 10px;">
+    <div class="form-group row">
         <input class="form-control center-block hovercard-light" id="url" type="text" placeholder="Long URL" name="url">
         <input class="form-control center-block hovercard-light" id="secret" type="password"
                placeholder="Secret (needed to search LongURL)" name="secret">
         <center>
-            <button class="btn btn-filled hover-light" style="padding: 0px 30px 0px;" id="submit" type="submit">Search
+            <button class="btn btn-filled hover-light" id="submit" type="submit">Search
             </button>
         </center>
     </div>
-    <div style="padding: 0px 30px 10px;">
+    <div id="shortCodeContainer">
         <div id="shortcode">
 
         </div>
     </div>
-    <p style="padding: 0px 30px"><a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Privacy
-        Policy</a> | <a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Terms of Service</a>
+    <p>
+        <a href="#" target="_blank">Privacy Policy</a>
+        |
+        <a href="#" target="_blank">Terms of Service</a>
     </p>
 </div>
 

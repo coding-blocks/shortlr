@@ -36,10 +36,10 @@ const redirectToHome = function (req, res) {
     res.redirect('http://codingblocks.com')
 };
 
-//
-// if (config.FORCE_HTTPS) {
-//     app.use('/admin', forceSSL)
-// }
+
+if (config.FORCE_HTTPS) {
+    app.use('/admin', forceSSL)
+}
 app.use('/admin', express.static(__dirname + "/static/admin"));
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 

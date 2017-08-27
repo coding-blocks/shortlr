@@ -11,7 +11,7 @@ try {
   }
 
   router.post('/', function (req, res) {
-    console.log("reached " + req.body.code);
+
       axios.post('https://account.codingblocks.com/oauth/token',
           {
             "client_id": secrets.CLIENT_ID,
@@ -21,7 +21,7 @@ try {
             "code": req.body.code
         })
         .then(function(authtoken){
-          console.log("back "+ authtoken.data.access_token)
+
           models.authFunction(authtoken, function (oneauth) {
           if(oneauth.success === true)
             res.status(200).send(oneauth);

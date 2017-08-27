@@ -1,7 +1,7 @@
 {
-  "FORCE_HTTPS": false,
-  "TRUST_HTTPS_PROXY": false ,
-  "ENABLE_301_HTTPS_REDIRECT": false,
+  "FORCE_HTTPS": true,
+  "TRUST_HTTPS_PROXY": true ,
+  "ENABLE_301_HTTPS_REDIRECT": true,
   "NON_HTTPS_REQUEST_ERRMSG": "SSL is required on this path",
   "PAGINATION_SIZE" : 30
 }

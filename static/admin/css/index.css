@@ -31,6 +31,9 @@
 
 #submit {
     padding: 0 30px 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #shortForm {

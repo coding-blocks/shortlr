@@ -9,25 +9,9 @@
     <link href="https://codingblocks.com/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
     <link href="https://codingblocks.com/css/themify-icons.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="js/jquery.min.js"></script>
-    <script>
-      $(function () {
-        $('.nav-container').load('/admin/includes/nav-container.html');
-      });
-    </script>
-    <script>
-      var arr = window.location.href.split("=");
-      if (arr.length === 2) {
-        $.post('/auth', {code: arr[1]}, function (authtoken) {
-          if (authtoken.success === true) {
-            localStorage.setItem("authtoken", authtoken.token);
-            $('#login-button').remove();
-            $('#menu').append('<li><a href="#">' + authtoken.user + '</a></li>');
-          } else {
-            window.location.replace("/admin");
-          }
-        })
-      }
-    </script>
+    <script src="/admin/js/index.js"></script>
+    <script src="/admin/js/analytics.js"></script>
+
 </head>
 
 <body class="bggrad">
@@ -62,83 +46,7 @@
         Policy</a> | <a href="#" tagret="_blank" style="color:#666!important;font-weight:normal;">Terms of Service</a>
     </p>
 </div>
-<script>
-  var heading = document.getElementById('homeHeading');
-  var form = document.getElementById('shortcodeform');
-  $("#shortForm").click(function () {
-    heading.style.display = "none";
-    form.style.display = "block";
-  });
-</script>
-<script>
-  $(function () {
-    $('#submit').click(function () {
 
-      var URLregex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
-
-      if ($('#url').val().length == 0) {
-
-        $('#shortcode').html('<div class=\'alert alert-danger\'><strong>URL field is empty</strong> </div>   ');
-        $('#url').css('border-color', 'red');
-
-      } else if (URLregex.test($('#url').val()) == false) {
-
-        $('#shortcode').html('<div class=\'alert alert-warning\'><strong>Invalid URL format</strong> <p> The URL must be of form </br>\"www.example.com"\ </br> \"https://example.com\" </br> \"mailto:foo@bar.com\" </p> </div> ');
-        $('#url').css('border-color', 'red');
-
-      } else {
-
-        $.post('/api/v1/shorten', {
-          url: $('#url').val(),
-          secret: $('#secret').val(),
-          code: $('#code').val()
-        }, function (data) {
-
-          if (typeof data == 'string') {
-            $('#shortcode').html(data)
-          } else {
-            $('#shortcode').html("<div class=\"shortcode hovercard-light\">" +
-              (data.existed ? "Already existed : " : "") +
-              '<a href=' + '"/' + data.shortcode + '">' +
-              window.location.origin + '/' + data.shortcode +
-              (data.existed ?
-                '</a> : pointing to : <a href="' + data.longURL + '">' + data.longURL :
-                "") +
-              '</a></div>'
-            );
-            $('.shortcode.hovercard-light').append(`<button class="btn btn-filled hover-light copy"> Copy </button>`);
-          }
-        }) //post request ends here
-      } //end of if else block
-    })
-  });
-
-  $('#shortcode').on('click', '.shortcode button', function () {
-
-    var range = document.createRange();
-    range.selectNode($('.shortcode a')[0]);
-    window.getSelection().addRange(range);
-    document.execCommand("Copy");
-    window.alert('Link Copied to your clipboard')
-  });
-</script>
-
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-  ga('create', 'UA-83327907-4', 'auto');
-  ga('send', 'pageview');
-</script>
 </body>
 
 </html>

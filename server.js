@@ -8,11 +8,11 @@ const config = require('./config.json');
 
 const app = express();
 
-app.set('forceSSLOptions', {
-    enable301Redirects: config.ENABLE_301_HTTPS_REDIRECT,
-    trustXFPHeader: config.TRUST_HTTPS_PROXY,
-    sslRequiredMessage: config.NON_HTTPS_REQUEST_ERRMSG
-});
+// app.set('forceSSLOptions', {
+//     enable301Redirects: config.ENABLE_301_HTTPS_REDIRECT,
+//     trustXFPHeader: config.TRUST_HTTPS_PROXY,
+//     sslRequiredMessage: config.NON_HTTPS_REQUEST_ERRMSG
+// });
 
 const shortner = require('./utils/shortner');
 const expressGa = require('express-ga-middleware');
@@ -37,9 +37,9 @@ const redirectToHome = function (req, res) {
 };
 
 
-if (config.FORCE_HTTPS) {
-    app.use('/admin', forceSSL)
-}
+// if (config.FORCE_HTTPS) {
+//     app.use('/admin', forceSSL)
+// }
 app.use('/admin', express.static(__dirname + "/static/admin"));
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 

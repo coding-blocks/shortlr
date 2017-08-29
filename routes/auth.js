@@ -12,7 +12,7 @@ try {
 
   router.post('/', function (req, res) {
 
-      axios.post('https://account.codingblocks.com/oauth/token',
+      axios.post(secrets.BASE_URL+'/oauth/token',
           {
             "client_id": secrets.CLIENT_ID,
             "redirect_uri": secrets.REDIRECT_URI,

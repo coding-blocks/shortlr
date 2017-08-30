@@ -3,8 +3,9 @@
  */
 const Sequelize = require('sequelize');
 const r = require('convert-radix64');
+const axios = require('axios');
+const uid = require('uid2');
 const secrets = require('../secrets');
-
 
 //This is so that BIGINT is treated at integer in JS
 require('pg').defaults.parseInt8 = true;

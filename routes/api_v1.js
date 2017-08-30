@@ -110,14 +110,14 @@ route.get('/expand/:shortcode', function (req, res) {
 
 });
 
-route.post('/longURL/expand', function (req, res) {
+route.post('/search', function (req, res) {
   if (req.body.secret !== SHORTENER_LONGURL_SECRET) {
     return res.send({
       status: 401,
       message: "Wrong secret Code"
     })
   }
-  db.fetchLongUrl(req.query.longcode, function (urls) {
+  db.fetchLongUrl(req.body.longcode, function (urls) {
     if (urls.length === 0) {
       return res.send({
         status: 404,

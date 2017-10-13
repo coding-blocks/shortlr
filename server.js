@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const forceSSL = require('express-force-ssl');
 const config = require('./config.json');
+const cors = require('cors');
 
 const app = express();
 
@@ -44,7 +45,7 @@ app.use('/admin', express.static(__dirname + "/static/admin"));
 app.use('/.well-known', express.static(__dirname + "/.well-known"));
 
 app.use(expressGa('UA-83327907-4'));
-app.use('/api/v1', route.api_v1);
+app.use('/api/v1', cors(), route.api_v1);
 app.use('/', route.shortcode);
 app.use('/auth', route.auth);
 app.use(redirectToHome);

@@ -10,7 +10,7 @@ const shortner = require('../utils/shortner');
 
 route.get('/:groupName/:shortcode', (req, res, next) => {
   let code = req.params.shortcode;
-  if (!req.params.shortcode || req.params.shortcode.length == 0) {
+  if (!req.params.shortcode || req.params.shortcode.length === 0) {
     next();
   }
   const groupName = req.params.groupName;
@@ -45,8 +45,10 @@ route.get('/:groupName/:shortcode', (req, res, next) => {
 route.get('/:shortcode', (req, res, next) => {
 
   if (!req.params.shortcode || req.params.shortcode.length == 0) {
-    next();
+    return next();
   }
+
+  req.params.shortcode = req.params.shortcode.trim()
 
   shortner.expand(req.params.shortcode, req.headers.referer, function (URL) {
     if (!URL) {

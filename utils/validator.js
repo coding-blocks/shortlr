@@ -6,6 +6,9 @@ exports = module.exports = {
         if (longUrl.indexOf('paypal') !== -1) {
             return false
         }
+        if (longUrl.indexOf('go2l.ink') !== -1) {
+            return false
+        }
 
         return true
     }

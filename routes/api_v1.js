@@ -6,6 +6,7 @@ const config = require('../config.json');
 const route = express.Router();
 const models = require('./../utils/db').models;
 
+const validUrl = require('../utils/validator').validUrl
 const shortner = require('../utils/shortner');
 const SHORTENER_SECRET = process.env.SHORTURL_SECRET || "cb@123";
 
@@ -16,13 +17,18 @@ const SHORTENER_GROUP_SECRET = process.env.SHORTURL_GROUP_SECRET || "cb@321"
 route.post('/shorten', function (req, res) {
   let url = req.body.url;
   var http = /^https?:\/\//i;
-  if (http.test(url) == false)
-    url = "http://" + url;
+  if (!http.test(url)) {
+      url = "http://" + url;
+  }
   let secret = req.body.secret;
   let code = null;
 
+  if (!validUrl(url)) {
+    return res.send("Unsupported link")
+  }
+
   let shortCode = req.body.code.split('/');
-  if (shortCode.length == 1 && secret == SHORTENER_SECRET) {
+  if (shortCode.length === 1 && secret === SHORTENER_SECRET) {
     console.log('Using secret');
     code = req.body.code;
     if (code && code.length > 9) {
@@ -36,7 +42,7 @@ route.post('/shorten', function (req, res) {
     });
   }
 
-  else if (secret == SHORTENER_GROUP_SECRET) {
+  else if (secret === SHORTENER_GROUP_SECRET) {
     console.log("Creating Group Secret");
     const groupName = shortCode[0];
     let tempCode = shortCode[1];

@@ -26,6 +26,10 @@ route.post('/shorten', function (req, res) {
   if (!validUrl(url)) {
     return res.send("Unsupported link")
   }
+  if (secret !== SHORTENER_SECRET) {
+    return res.send("No more making links without secret")
+  }
+
 
   let shortCode = req.body.code.split('/');
   if (shortCode.length === 1 && secret === SHORTENER_SECRET) {

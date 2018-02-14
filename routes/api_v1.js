@@ -3,16 +3,20 @@
  */
 const express = require('express')
 const config = require('../config.json')
+const secrets = require('../secrets')
 const route = express.Router()
 const models = require('./../utils/db').models
 
 const validUrl = require('../utils/validator').validUrl
 const shortner = require('../utils/shortner')
-const SHORTENER_SECRET = process.env.SHORTURL_SECRET || 'cb@123'
+const SHORTENER_SECRET =
+  process.env.SHORTURL_SECRET || secrets.SHORTURL_SECRET || 'cb@123'
 
-const SHORTENER_LONGURL_SECRET = process.env.SHORTURL_LONGURL_SECRET || 'cb@123'
+const SHORTENER_LONGURL_SECRET =
+  process.env.SHORTURL_LONGURL_SECRET || secrets.SHORTURL_LONGURL_SECRET || 'cb@123'
 const db = require('./../utils/db')
-const SHORTENER_GROUP_SECRET = process.env.SHORTURL_GROUP_SECRET || 'cb@321'
+const SHORTENER_GROUP_SECRET =
+  process.env.SHORTURL_GROUP_SECRET || secrets.SHORTURL_GROUP_SECRET || 'cb@321'
 
 route.post('/shorten', function (req, res) {
   let url = req.body.url

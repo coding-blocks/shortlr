@@ -1,3 +1,4 @@
+![alt text](logo.png)
 # shortlr
 
 An URL shortening service written in **_express_**

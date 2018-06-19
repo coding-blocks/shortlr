@@ -9,6 +9,12 @@ exports = module.exports = {
         if (longUrl.indexOf('go2l.ink') !== -1) {
             return false
         }
+        if (longUrl.indexOf('bit.ly') !== -1) {
+            return false
+        }
+        if (longUrl.indexOf('goo.gl') !== -1) {
+            return false
+        }
 
         return true
     }

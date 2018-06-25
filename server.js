@@ -48,6 +48,17 @@ app.use(expressGa('UA-83327907-4'));
 app.use('/api/v1', cors(), route.api_v1);
 app.use('/', route.shortcode);
 app.use('/auth', route.auth);
+
+// Redirects the user to IDE home page if no ID is provided
+app.get('/ide', (req, res) => {
+    res.redirect('http://ide.codingblocks.com');
+})
+
+// Redirects user to a particular place in IDE if he provides the ID
+app.get('/ide/:id', (req, res) => {
+    res.redirect(`http://ide.codingblocks.com/#/s/${req.params.id}`);
+});
+
 app.use(redirectToHome);
 
 

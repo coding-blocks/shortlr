@@ -47,7 +47,7 @@
 <script>
   function refreshStats() {
     $.get('/api/v1/stats', function (data) {
-      stats = "";
+      let stats = "";
       data.urls.forEach(function (url) {
         stats +=
           "<tr>" +
